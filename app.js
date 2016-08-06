@@ -4,6 +4,7 @@ var app = express();
 var request = require('request');
 var _ = require('lodash');
 var config = require('./config');
+var bodyParser = require('body-parser')
 
 
 app.use(function(req, res, next) {
@@ -11,6 +12,11 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, accessToken");
   next();
 });
+
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 
 app.get('/', function (req, res) {
   
@@ -55,6 +61,10 @@ app.get('/info', isAccess,function(req, res){
 app.get('/project', ProjectController.list);
 
 app.get('/tags', ProjectController.groupByTags);
+
+app.post('/tags', ProjectController.requestByTag);
+
+app.post('/project', ProjectController.add);
 
 app.listen(config.server.port, function () {
   logger.info('project running on '+ config.server.port);

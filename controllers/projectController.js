@@ -11,31 +11,39 @@ module.exports = function(config){
     return {
         list : function(req, res){
             logger.info('List action ....');
-            var response = function(doc){
-                if(doc){
-                    res.json(doc);
-                }else{
-                    res.sendStatus(404);
-                }
-            };
+    
             var id = req.params.id;
             logger.info('id :'+id); 
             if(id){
-                ProjectORM.findById(id, response);
+                ProjectORM.findById(id, function(doc){
+                    res.json(doc);
+                });
             }else{
-                ProjectORM.findAll(response);
+                ProjectORM.findAll(function(doc){
+                    res.json(doc);
+                });
             }
         },
         groupByTags: function(req, res){
             logger.info('group by tags actions...');
-            var response = function(doc){
-                if(doc){
-                    res.json(doc);
-                }else{
-                    res.sendStatus(404);
-                }
-            };
-            ProjectORM.groupByTags(response);
+    
+            ProjectORM.groupByTags(function(doc){
+                res.send(doc);
+            });
+        },
+        add: function(req, res){
+            logger.info('add action...');
+    
+            ProjectORM.add(req.body, function(){
+                res.sendStatus(200);
+            });
+        },
+        requestByTag: function(req, res){
+            var tag = (req.body.tag) ? new Array(req.body.tag) : req.body.tags;
+            logger.info("request select * project where tag(s) "+tag);
+           ProjectORM.findByTag(tag, function(doc){
+                res.json(doc);
+            });
         }
     };
 };

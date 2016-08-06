@@ -14,6 +14,8 @@ module.exports = function(config){
 	        mongoose.connection.close();	        
 	    });
 
-	    db.once('open', process);
+	    db.once('open', function(){
+	    	process(mongoose);
+	    });
 	}
 };
