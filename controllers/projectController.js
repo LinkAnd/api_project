@@ -25,6 +25,17 @@ module.exports = function(config){
             }else{
                 ProjectORM.findAll(response);
             }
+        },
+        groupByTags: function(req, res){
+            logger.info('group by tags actions...');
+            var response = function(doc){
+                if(doc){
+                    res.json(doc);
+                }else{
+                    res.sendStatus(404);
+                }
+            };
+            ProjectORM.groupByTags(response);
         }
     };
 };

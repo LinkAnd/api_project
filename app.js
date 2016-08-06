@@ -54,6 +54,7 @@ app.get('/info', isAccess,function(req, res){
 
 app.get('/project', ProjectController.list);
 
+app.get('/tags', ProjectController.groupByTags);
 
 app.listen(config.server.port, function () {
   logger.info('project running on '+ config.server.port);

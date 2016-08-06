@@ -20,6 +20,21 @@ module.exports = function(config){
 					callback(doc);
 				});
 			});
+		},
+		groupByTags : function(callback){
+			var db = new Db(config);
+			db.exec(function(){
+				Project.aggregate([
+					{
+						$group : {
+							_id : "tags",
+							count: {$sum : 1}
+						}	
+					}
+				], function(err, doc){
+					callback(doc);
+				});
+			});
 		}
 	};
 };
