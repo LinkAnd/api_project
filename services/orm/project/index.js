@@ -18,7 +18,6 @@ module.exports = function(config){
 			db.exec(function(){
 				Project.find({}, function(err, doc){
 					callback(doc);
-					mongoose.connection.close();
 				});
 			});
 		}

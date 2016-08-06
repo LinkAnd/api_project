@@ -20,7 +20,6 @@ module.exports = function(config){
             };
             var id = req.params.id;
             logger.info('id :'+id); 
-            logger.info(ProjectORM);           
             if(id){
                 ProjectORM.findById(id, response);
             }else{
